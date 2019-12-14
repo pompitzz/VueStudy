@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    {{ message }}
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    /*
+    Vue를 시작하기 위해 만들어야 하는 Instance.
+    console에서 확인해보면 다양한 속성들을 볼수 있다.
+
+     */
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello world'
+        },
+        method: {},
+        created: {}
+    });
+</script>
+</body>
+</html>
