@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Document</title>
+    <style>
+        .text-blue {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--  이런식으로 id값을 바인딩을 통해 넣을수 있다. 이거도 vue의 값을 바꾸면 reactivity를 통해 유동적으로 변화한다 -->
+    <p v-bind:class="name" v-bind:id="uuid">{{ num }}</p>
+    <p>{{ doubleNum }}</p>
+
+    <!--  loading = ture일땐 Loading... false일땐 test user Login has ben logged in  -->
+    <div v-if="loading">
+        Loading...
+    </div>
+    <div v-else>
+        test user Login has been logged in
+    </div>
+
+    <!--  이건 false여도 html tag가 사라지는게 아닌 display: none;이 된다.  -->
+    <div v-show="loading">
+        Loading...
+    </div>
+
+    <!--  인풋 박스를 만들고 입력된 값을 p 태그에 출력해보세요  -->
+    <input placeholder="edit me" type="text" v-model="message">
+    <p>Message is: {{ message }}</p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    /*
+    뷰의 템플릿 문법
+     - 뷰로 화면을 조적하는 방법을 의미, 템플릿 문법은 크게 데이터 바인딩과 디렉티브로 나뉜다.
+    데이터 바인딩
+     - {{ user }}
+    디렉티브
+     - <span v-if="show">Vue.js</span>
+     */
+    new Vue({
+        el: '#app',
+        data: {
+            num: 10,
+            uuid: 'abc1234',
+            name: 'text-blue',
+            loading: true,
+            message: '',
+        },
+        /* data를 활용할땐 computed를 이용한다.
+           num 값을 vue 개발자 도구에서 바꾸면 같이 변화한다.
+         */
+        computed: {
+            doubleNum: function () {
+                return this.num * 2;
+            }
+        }
+    });
+</script>
+</body>
+</html>
