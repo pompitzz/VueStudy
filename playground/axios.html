@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Axios</title>
+</head>
+<body>
+<div id="app">
+    <button v-on:click="getData">get user</button>
+    <div>
+        {{ users }}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+    /* Aixos와 Ajax
+        - vue에서도 원랜 vue-resource라는 HTTP 통신용 라이브러리가 있었다.
+          그러나 2년전에 Vue.js를 만든 Evan You가 공식 라이브러리에서 제외했다.
+          지금은 사용하지 않는다. 서칭|시 샘플중 vue-resource로 구현한 것은 오래된 샘플인것을 참고 하여야 한다.
+
+        Axiox
+         - 뷰에서 권고하는 HTTP통신 라이브러리이다. Promise 기반의 HTTP 통신 라이브러리이며 상대적으로
+           다른 HTTP 통신 라이브러리들에 비해 문서화가 잘되어 있고 API가 다양하다.
+
+        Promise
+         - 자바 스크립트의 비동기 처리 패턴
+            1. callback
+            2. promise
+            3. promise + generator
+            4. async & await
+
+        오픈소스 사용시
+          - 일반적으로 오픈소스를 사용할 때는 깃헙의 star수를 보고 commit, contributors를 보는게 좋다.
+     */
+    new Vue({
+        el: '#app',
+        data: {
+            users: [],
+        },
+        methods: {
+            getData: function () {
+                console.log(this);
+                var vm = this;
+                /*
+                axios 구문 안에서의 this는 흔히 알고 있는 this가 아니다.
+                log 찍어보면 다른것을 알 수 있다. 그렇기 때문에 this를 변수에 넣어서 이용해야한다.
+                 */
+                axios.get('https://jsonplaceholder.typicode.com/users')
+                    .then(function (response) {
+                        vm.users = response.data;
+                        console.log(this);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        }
+    });
+</script>
+</body>
+</html>
