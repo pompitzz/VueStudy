@@ -17,34 +17,48 @@
 
     var viewModel = {};
 
-    /*
-    객체의 동작을 재정의하는 API
-    객체의 특정 속성을 재정의 한다. ( 우리 마음대로 동작을 바꿀 수 있다.)
-     */
-    // Object.defineProperty(대상 객체, 객체의 속성, {
-    //     //정의할 내용
-    // });
-
-    Object.defineProperty(viewModel, 'str', {
-        // 속성의 접근했을 때의 동작을 정의
-        // 콘솔에서 viewModel.str로 접근하면 아래가 발동
-        get: function () {
-            // viewModel.str에 접근했을 때의 동작을 정의
-            console.log('access');
-        },
-        // 속성의 값을 할당했을 떄의 동작을 정의
-        // 콘솔에서 viewModel.str = 10 이라고하면 아래가 발동
-        set: function (newValue) {
-            console.log('allocate', newValue)
-            div.innerHTML = newValue;
-        }
+    /*즉시 실행 함수 공부해보기
+    기본적으로 앱 로직에 노출되지 않게 내부 코드를 또 다른 스코프에 넣어준다.
+    즉 라이브버리의 내부 로직을 사용자에게 노출되지 않도록 변수 유효범위를 분리하기 위함이다.
+    파일을 실행하고 init, render를 호출해도 호출이 되지않는다.
+    */
+    (function () {
         /*
-        콘솔에서 newValue.str = 3; 하면 div에 들어감.
-        즉 str 값을 바꿀때마다 div 값이 변한다. ---> Reactivity
-        즉 데이터의 변화를 라이브러리에서 감지해서 알아서 화면을 바꾸어준다.
-        이것이 데이터 바인딩이다.
-         */
-    })
+            객체의 동작을 재정의하는 API
+            객체의 특정 속성을 재정의 한다. ( 우리 마음대로 동작을 바꿀 수 있다.)
+             */
+        // Object.defineProperty(대상 객체, 객체의 속성, {
+        //     //정의할 내용
+        // });
+        function init() {
+            Object.defineProperty(viewModel, 'str', {
+                // 속성의 접근했을 때의 동작을 정의
+                // 콘솔에서 viewModel.str로 접근하면 아래가 발동
+                get: function () {
+                    // viewModel.str에 접근했을 때의 동작을 정의
+                    console.log('access');
+                },
+                // 속성의 값을 할당했을 떄의 동작을 정의
+                // 콘솔에서 viewModel.str = 10 이라고하면 아래가 발동
+                set: function (newValue) {
+                    console.log('allocate', newValue)
+                    render(newValue);
+                }
+                /*
+                콘솔에서 newValue.str = 3; 하면 div에 들어감.
+                즉 str 값을 바꿀때마다 div 값이 변한다. ---> Reactivity
+                즉 데이터의 변화를 라이브러리에서 감지해서 알아서 화면을 바꾸어준다.
+                이것이 데이터 바인딩이다.
+                 */
+            })
+        }
+
+        function render(value) {
+            div.innerHTML = value;
+        }
+
+        init();
+    })();
 </script>
 </body>
 </html>
