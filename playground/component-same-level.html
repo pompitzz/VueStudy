@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    <app-header v-bind:propsdata="num"></app-header>
+    <app-content v-on:pass="deliverNum"></app-content>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    /* 같은 레벨 컴포넌트인 appContent에서 appHeader로 값을 넘기는 예제
+
+       - 레벨이 같으므로 바로 전달 할 순 없다.
+         그러므로 AppContent -> Root -> AppHeader 이런 순으로 진행되어야 한다.
+         즉, evnet를 발생하여 Root에게 전달하고 Root에선 props로 값을 AppHeader로 전달해준다.
+     */
+    var appHeader = {
+        template: '<div>header: {{propsdata}}</div>',
+        props: ['propsdata']
+    };
+    var appContent = {
+        template: '<div>content<button v-on:click="passNum" style="margin-left: 10px">pass</button></div>',
+        methods: {
+            passNum: function () {
+                // 이벤트 발생시 값을 넘겨 주면 부모는 그 값을 사용 가능하다.
+                this.$emit('pass', 10);
+            }
+        }
+    };
+    new Vue({
+        el: '#app',
+        components: {
+            'app-header': appHeader,
+            'app-content': appContent
+        },
+        data: {
+            num: 0
+        },
+        methods: {
+            // 이벤트를 받는 부모에서는 넘김 값은 매개변수로 받을 수 있다.
+            deliverNum: function (value) {
+                this.num = value;
+            }
+        }
+
+    });
+</script>
+</body>
+</html>
