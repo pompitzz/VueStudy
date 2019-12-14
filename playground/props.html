@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    <!--    <app-header v-bind: 프롭스 속성 이름="상위 컴포넌트의 데이터 이름"></app-header>-->
+    <!--  Root의 data(상위 컴포넌트 데이터 이름)는 message이다. 프롭스 속성 이름은 컴포넌트에 props:에 정리한 것  -->
+    <app-header v-bind:propsdata="message"></app-header>
+    <app-content v-bind:propsdata="num"></app-content>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    /* 컴포넌트 통신
+        - 뷰 컴포넌트는 각각 고유한 데이터 유효 범위를 갖는다. 따라서, 컴포넌트 간에 데이터를 주고 받기 위해선
+        상위 컴포넌트 -> 하위 컴포넌트 : props 전달 (데이터 내려줌)
+        하위 컴포넌트 -> 상위 컴포넌트 : 이벤트 발생 (이벤트 올려줌)
+     */
+    /* 컴포넌트 통신 규칙이 필요한 이유
+
+       - 서로 다른 컴포넌트에서 데이터가 통신될 때 규칙이 없으면 매우 복잡해진다.
+         그러므로 컴포넌트 통신을 지켜 데이터를 아래로만 내려보내게 하고 이벤트는 위로만 가게 하여
+         데이터 추적이 쉬워진다.
+       - Props(내려가는 데이터) / Event(올라가는 이벤트)
+     */
+
+    /* Props
+       Props를 통해 하위 컴포넌트에게 데이터를 내려보내줄 수 있다.
+       상위 컴포넌트의 데이터를 변화시키면 하위 컴포넌트에게 적용이 된다. (Reactivity)
+     */
+    var appHeader = {
+        template: '<h1>{{propsdata}}</h1>',
+        props: ['propsdata']
+    };
+    var appContent = {
+        template: '<div>{{propsdata}}</div>',
+        props: ['propsdata']
+    };
+
+    new Vue({
+        el: '#app',
+        components: {
+            'app-header': appHeader,
+            'app-content': appContent
+        },
+        // 이렇게 등록하면 Root에 data의 message에 들어간다.
+        data: {
+            message: 'Hello',
+            num: 10,
+        }
+    });
+</script>
+</body>
+</html>
