@@ -1,0 +1,17 @@
+node -v // 10 버전 이상
+npm -v // 6 버전 이상
+npm install -g @vue/cli
+C:\Users\dmdsj\AppData\Roaming\npm\node_modules\@vue // vue cli 설치 경로
+
+--------------------------------Version별 차이 알기-----------------------------------------------------
+[Vue CLI 2.x]
+vue init -> '프로젝트 템플릿 유형', '프로젝트 폴더 위치'
+vue init -> 'webpack-simple', '프로젝트 폴더 위치'
+
+[Vue CLI 3.x]
+vue create '프로젝트 폴더 위치'   // 플러그인 기반으로 변경되어서 템플릿 유형이 사라짐??
+vue create vue-cli
+cd vue-cli
+npm run serve ----> package.json에 정의되어있는 scipts 밑에 serve를 실행하는 것
+
+public index.html에 주석아래에 src의 파일들을 하나로 번들링해서 만들어주는 것이다.
