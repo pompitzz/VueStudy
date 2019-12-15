@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Document</title>
+    <style>
+        .warning {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--    <p v-bind:class="cname">Hello</p>-->
+    <!--  이렇게 조건에 맞게 class를 추가하거나 말거나가 가능하다. 즉 여기서는 isErorr가 true일때 warning이 들어간다.
+          허나 이렇게 써도 되지만 computed를 이용하여 스크립트 단에 내리는게 좋다. 서로의 로직은 분리하자! -->
+    <p v-bind:class=" { warning: isError } ">Hello</p>
+
+    <!--  즉 이렇게 errorTextColor라는 method를 만들고 그것을 이용하면 된다.  -->
+    <p v-bind:class="errorTextColor">Hello</p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            // cname: 'blue-text',
+            isError: false,
+        },
+        computed: {
+            errorTextColor: function () {
+                return this.isError ? 'warning' : null;
+            }
+        }
+    });
+</script>
+</body>
+</html>
