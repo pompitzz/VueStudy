@@ -15,3 +15,6 @@ cd vue-cli
 npm run serve ----> package.json에 정의되어있는 scipts 밑에 serve를 실행하는 것
 
 public index.html에 주석아래에 src의 파일들을 하나로 번들링해서 만들어주는 것이다.
+
+npm i axios
+

@@ -1,33 +1,41 @@
 <template>
-    <div id="app">
-        <img alt="Vue logo" src="./assets/logo.png">
-        <HelloWorld msg="Welcome to Your Vue.js App"/>
-        <!-- 컴포넌트 명명법 종류들 -->
-        <!--<hello-world></hello-world>-->
-        <!--<HelloWorld></HelloWorld>-->
-        <!--<HelloWorld/>-->
+    <div>
+        <app-header
+                v-bind:propsdata="str"
+                v-on:renew="renewStr"
+        />
     </div>
+    <!--    <div></div>     -->
+    <!--    div는 한개만 존재해야한다!!     -->
 </template>
 
 <script>
-    import HelloWorld from './components/HelloWorld.vue'
+    // 외부 .vue를 가져올땐 이렇게 import한다.
+    import AppHeader from "./components/AppHeader";
 
+    // new Vue({
+    //     data: {
+    //         str: 'hi'
+    //     }
+    // });
     export default {
-        // 인스턴스 옵션 속성 or 컴포넌트 옵션 속성을 정의할 수 있다.
-        name: 'app',
+        // 다른 vue에서 참조하면 안되기 때문에 function으로 만들고 retrun안에 넣어줘야 한다.
+        data: function () {
+            return {
+                str: 'Header'
+            }
+        },
         components: {
-            HelloWorld
+            'app-header': AppHeader,
+        },
+        methods: {
+            renewStr: function () {
+                this.str = 'Renewd Header';
+            }
         }
     }
 </script>
 
 <style>
-    #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin-top: 60px;
-    }
+
 </style>
