@@ -14,7 +14,6 @@
 
 <script>
     let div = document.querySelector('#app');
-
     var viewModel = {};
 
     /*즉시 실행 함수 공부해보기
@@ -41,7 +40,7 @@
                 // 속성의 값을 할당했을 떄의 동작을 정의
                 // 콘솔에서 viewModel.str = 10 이라고하면 아래가 발동
                 set: function (newValue) {
-                    console.log('allocate', newValue)
+                    console.log('allocate', newValue);
                     render(newValue);
                 }
                 /*
@@ -52,11 +51,9 @@
                  */
             })
         }
-
         function render(value) {
             div.innerHTML = value;
         }
-
         init();
     })();
 </script>
