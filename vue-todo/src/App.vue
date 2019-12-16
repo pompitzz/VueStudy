@@ -1,8 +1,8 @@
 <template>
     <div id="app">
         <TodoHeader/>
-        <TodoList/>
         <TodoInput/>
+        <TodoList/>
         <TodoFooter/>
     </div>
 </template>
