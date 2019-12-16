@@ -1,6 +1,8 @@
 <template>
     <div>
-        <ul>
+        <!-- name의 list가 아래 css스타일의 list-enter-active를 가능하게 하는 것
+             - tag는 원래 있던 tag명, 원래 ul 태그였는데 transition으로 교체 훟 tag = ul 한것  -->
+        <transition-group name="list" tag="ul">
             <!--  v-for를 사용하면 갯수가 몇개건 간에 순서를 부여해줄 수 있다. index가 그 순서라고 생각하면 된다.
                   - v-bind:key 안해주면 idnex 오류난다. -->
             <li class="shadow" v-bind:key="todoItem.item" v-for="(todoItem,index) in propsdata">
@@ -13,7 +15,7 @@
                     <i class="fas fa-trash-alt"/>
                 </span>
             </li>
-        </ul>
+        </transition-group>
     </div>
 </template>
 
@@ -70,5 +72,14 @@
         color: #b3adad;
     }
 
+    /* 리스트 아이템 Transitions & Animation */
+    .list-enter-active, .list-leave-active {
+        transition: all 1s;
+    }
 
+    .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */
+    {
+        opacity: 0;
+        transform: translateY(30px);
+    }
 </style>
