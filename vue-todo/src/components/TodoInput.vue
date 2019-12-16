@@ -19,13 +19,7 @@
         methods: {
             addTodo: function () {
                 if (this.newTodoItem !== '') {
-                    // 기존의 text 값에 boolean 추가해서 체크를 확인한다.
-                    var obj = {
-                        completed: false,
-                        item: this.newTodoItem
-                    };
-                    // 저장하는 로직
-                    localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+                    this.$emit('addTodoItem', this.newTodoItem);
                     // localStorage.setItem(this.newTodoItem, obj); 이렇게 넣으면 OBJECT로 Value가 들어간다.
                     this.clearInput();
                 }

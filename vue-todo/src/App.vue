@@ -1,8 +1,8 @@
 <template>
     <div id="app">
         <TodoHeader/>
-        <TodoInput/>
-        <TodoList/>
+        <TodoInput v-on:addTodoItem="addOneItem"/>
+        <TodoList v-bind:propsdata="todoItems"/>
         <TodoFooter/>
     </div>
 </template>
@@ -12,8 +12,36 @@
     import TodoList from "./components/TodoList";
     import TodoInput from "./components/TodoInput";
     import TodoFooter from "./components/TodoFooter";
-
     export default {
+        data: function () {
+            return {
+                todoItems: [],
+            }
+        },
+        methods: {
+            addOneItem: function (newTodoItem) {
+                var obj = {completed: false, item: newTodoItem};
+                localStorage.setItem(newTodoItem, JSON.stringify(obj));
+                this.todoItems.push(obj);
+            }
+        },
+        /* 뷰 라이플 사이클
+           인스턴스 생성 ---> 마운티드 ---> 업데이티드 ---> 디스트로이티드
+           - 위 4개 사이사이에 비포 업데이트 등등이 있는데
+              created는 생성되는 시점에 동작하는 life-cycle
+         */
+        created: function () {
+            if (localStorage.length > 0) {
+                for (var i = 0; i < localStorage.length; i++) {
+                    if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
+                        // JSON.parse 해줘야 type이 String이 아닌 원래 타입으로 돌아간다.
+                        this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+
+                        // this.todoItems.push(localStorage.key(i));
+                    }
+                }
+            }
+        },
         components: {
             TodoHeader,
             TodoList,
