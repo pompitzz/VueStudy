@@ -22,16 +22,10 @@
         props: ['propsdata'],
         methods: {
             removeTodo: function (todoItem, index) {
-                // key 값을 통해 item을 지울 수 있다.
-                localStorage.removeItem(todoItem.item);
-                // 이렇게 splice를 이용하여 리스트 목록도 제거 가능하다.
-                this.todoItems.splice(index, 1);
-                // slice는 지우는데 기존 배열을 변경하지 않기 때문에 지우고 새로운 배열을 반환하는 splice를 사용한다.
+                this.$emit('removeItem', todoItem, index);
             },
             toggleComplete: function (todoItem, index) {
-                todoItem.completed = !todoItem.completed;
-                // 로컬 스토리지 데이터 갱신
-                localStorage.setItem(todoItem, JSON.stringify(todoItem));
+                this.$emit('toggleItem', todoItem, index);
             }
         },
     }

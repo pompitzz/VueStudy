@@ -2,8 +2,12 @@
     <div id="app">
         <TodoHeader/>
         <TodoInput v-on:addTodoItem="addOneItem"/>
-        <TodoList v-bind:propsdata="todoItems"/>
-        <TodoFooter/>
+        <TodoList
+                v-bind:propsdata="todoItems"
+                v-on:removeItem="removeOneItem"
+                v-on:toggleItem="toggleOneItem"
+        />
+        <TodoFooter v-on:clearAll="clearAllItems"/>
     </div>
 </template>
 
@@ -23,6 +27,20 @@
                 var obj = {completed: false, item: newTodoItem};
                 localStorage.setItem(newTodoItem, JSON.stringify(obj));
                 this.todoItems.push(obj);
+            },
+            removeOneItem: function (todoItem, index) {
+                localStorage.removeItem(todoItem.item);
+                this.todoItems.splice(index, 1);
+            },
+            toggleOneItem: function (todoItem, index) {
+                // todoItem.completed = !todoItem.completed; props로 내린 아이템을 다시 App으로 올리는 건 안좋음(안티 패턴)
+                this.todoItems[index].completed = !this.todoItems[index].completed;
+                localStorage.removeItem(todoItem.item);
+                localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+            },
+            clearAllItems: function () {
+                localStorage.clear();
+                this.todoItems = [];
             }
         },
         /* 뷰 라이플 사이클
