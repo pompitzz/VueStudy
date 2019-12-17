@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import * as getters from './getter'
+import * as mutations from './mutations'
 
 Vue.use(Vuex);
 /* use는 vue의 플러그인 기능
@@ -125,36 +127,12 @@ export const store = new Vuex.Store({
         headerText: 'TODO IT!',
         todoItems: storage.fetch(),
     },
-    getters: {
-        storedTodoItems(state) {
-            return state.todoItems;
-        },
-        getHeaderText(state) {
-            return state.headerText;
-        }
-    },
+    getters,
+    mutations,
+    // 스토어 속성 모듈화
+    // getters: getters,
+    // mutations: mutations,
     /* state로 직접 변경하지 않고 mutations로 변경할까?
        - 여러 개의 컴포넌트에서 state값을 변경할 경우 어느 컴포넌트에서 해당 state를 변경했는지 추적하기가 어렵다.
      */
-    mutations: {
-        addOneItem(state, todoItem) {
-            const obj = {completed: false, item: todoItem};
-            localStorage.setItem(todoItem, JSON.stringify(obj));
-            state.todoItems.push(obj);
-        },
-        removeOneItem(state, payload) {
-            localStorage.removeItem(payload.todoItem.item);
-            state.todoItems.splice(payload.index, 1);
-        },
-        toggleOneItem(state, payload) {
-            payload.todoItem.completed = !payload.todoItem.completed;
-            localStorage.removeItem(payload.todoItem.item);
-            localStorage.setItem(payload.todoItem.item, JSON.stringify(payload.todoItem));
-        },
-        clearAllItems(state) {
-            localStorage.clear();
-            state.todoItems = [];
-        }
-    },
 });
-//this.$store 이렇게 접근이 가능하다.
