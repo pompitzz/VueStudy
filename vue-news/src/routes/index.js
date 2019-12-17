@@ -10,6 +10,7 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
     mode: 'history',
+    // routes가 커졌을 때도 모듈화가 가능하다.
     routes: [
         {
             path: '/',

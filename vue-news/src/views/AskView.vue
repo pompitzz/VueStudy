@@ -1,24 +1,24 @@
 <template>
     <div>
-        <div v-for="ask in askList"> {{ ask.title }}</div>
-    </div>
+        <p v-for="ask in getAskList">
+            <a :href="ask.url">
+                {{ask.title}}
+            </a>
+            <small>{{ask.time_ago}} by {{ask.user}}</small>
+        </p></div>
 </template>
 
 <script>
-    import {fetchAskList} from "../api";
+
+    import {mapGetters} from "vuex";
 
     export default {
         name: "AskView",
-        data() {
-            return {
-                askList: [],
-                errors: []
-            }
+        computed: {
+            ...mapGetters(['getAskList']),
         },
         created() {
-            fetchAskList()
-                .then(response => this.askList = response.data)
-                .catch(error => this.errors = error);
+            this.$store.dispatch('FETCH_ASK')
         }
     }
 </script>
