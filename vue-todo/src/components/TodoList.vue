@@ -5,13 +5,13 @@
         <transition-group name="list" tag="ul">
             <!--  v-for를 사용하면 갯수가 몇개건 간에 순서를 부여해줄 수 있다. index가 그 순서라고 생각하면 된다.
                   - v-bind:key 안해주면 idnex 오류난다. -->
-            <li class="shadow" v-bind:key="todoItem.item" v-for="(todoItem,index) in this.$store.state.todoItems">
+            <li class="shadow" v-bind:key="todoItem.item" v-for="(todoItem,index) in this.todoItems">
                 <i class="checkBtn fas fa-check" v-bind:class="{ checkBtnCompleted : todoItem.completed }"
-                   v-on:click="toggleComplete(todoItem, index)"/>
+                   v-on:click="toggleComplete({todoItem, index})"/>
                 <span v-bind:class="{textCompleted : todoItem.completed }">
                     {{ todoItem.item }}
                 </span>
-                <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
+                <span class="removeBtn" v-on:click="removeTodo({todoItem, index})">
                     <i class="fas fa-trash-alt"/>
                 </span>
             </li>
@@ -20,15 +20,30 @@
 </template>
 
 <script>
+    import {mapGetters, mapMutations} from 'vuex'
     export default {
         methods: {
-            removeTodo(todoItem, index) {
-                this.$store.commit('removeOneItem', {todoItem, index});
-            },
-            toggleComplete(todoItem, index) {
-                this.$store.commit('toggleOneItem', {todoItem, index});
-            }
+            ...mapMutations({
+                removeTodo: 'removeOneItem', // todoItem, index를 안넣어도 된다. 알아서 넘겨줌. 대신 템플릿을 객체로 넣어줘야함
+                toggleComplete: 'toggleOneItem'
+            }),
+            // removeTodo(todoItem, index) {
+            //     this.$store.commit('removeOneItem', {todoItem, index});
+            // },
+            // toggleComplete(todoItem, index) {
+            //     this.$store.commit('toggleOneItem', {todoItem, index});
+            // }
         },
+        computed: {
+            // todoItems() {
+            //     return this.$store.getters.storedTodoItems;
+            // },
+            // ...mapGetters(['storedTodoItems']),
+            ...mapGetters({
+                todoItems: 'storedTodoItems',
+            }) // Getter의 이름이랑 실제로 컴포넌트에서 사용하는 이름이 다를 때는 객체로 선언하면된다.
+
+        }
     }
 </script>
 

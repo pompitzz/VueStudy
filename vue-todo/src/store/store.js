@@ -125,6 +125,14 @@ export const store = new Vuex.Store({
         headerText: 'TODO IT!',
         todoItems: storage.fetch(),
     },
+    getters: {
+        storedTodoItems(state) {
+            return state.todoItems;
+        },
+        getHeaderText(state) {
+            return state.headerText;
+        }
+    },
     /* state로 직접 변경하지 않고 mutations로 변경할까?
        - 여러 개의 컴포넌트에서 state값을 변경할 경우 어느 컴포넌트에서 해당 state를 변경했는지 추적하기가 어렵다.
      */
