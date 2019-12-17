@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Document</title>
+</head>
+<body>
+<div>Jquery ajax</div>
+<script
+        crossorigin="anonymous"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+    //Promise: then, catch 문으로 처리
+    function callAjax() {
+        return new Promise(function (resolve, reject) { // Promise 객체는 항상 resolve, reject를 가진다
+            $.ajax({
+                url: 'https://api.hnpwa.com/v0/news/1.json',
+                success: function (data) {
+                    resolve(data);
+                }
+            });
+        })
+    }
+
+    function fetchData() {
+        //1
+        var result = [];
+
+        //2 Promise: then, catch 문으로 처리
+        // $.ajax({
+        //     url: 'https://api.hnpwa.com/v0/news/1.json',
+        //     success: function (data) {
+        //         console.log('데이터 호출 결과', data);
+        //         result = data;
+        //     }
+        // });
+
+        callAjax()
+            .then(function (data) {
+                console.log('데이터 호출 결과', data);
+                result = data;
+            });
+
+        console.log('함수 결과', result); // 먼저 로그가 찍힘
+
+        /*비동기 처리
+          - 데이터 요청이 가고 응답오기 전에 다른 거를 먼저 실행한다. (콜백 함수)
+          - 비동기 처리를 위해 계속 콜백 함수 안에 코딩을하면 콜백 지옥 발생
+          - 이것의 방안으로 Promise가 있다. -> 직관적인 코드를 짜게 해준다.
+           */
+    }
+
+    fetchData();
+</script>
+</body>
+</html>
