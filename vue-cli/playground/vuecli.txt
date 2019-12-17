@@ -14,6 +14,24 @@ vue create vue-cli
 cd vue-cli
 npm run serve ----> package.json에 정의되어있는 scipts 밑에 serve를 실행하는 것
 
+CLI 2.x vs CLI 3.x
+ - 명령어
+    - 2.x : vue init webpack-simple(프로젝트 템플릿 이름) 파일 위치
+    - 3.x : vue create 프로젝트 이름
+
+ - 웹펙 설정 파일 (가장 큰 차이점, 3.x에 webpack.config.js가 사라짐 왜냐하면 매우복잡하기 때문에 사용자가 몰라도 되게 함)
+ - 웹펙의 설정을 추가하기 위해서는 별도의 내용들을 추가해야 한다.
+    - 2.x : 노출 O
+    - 3.x : 노출 X
+
+ - 프로젝트 구성
+    - 2.x : 깃헙의 템플릿 다운로드
+    - 3.x : 플러그인 기반으로 기능 추가
+
+ - ES6 이해도
+    - 2.x : 필요 X
+    - 3.x : 필요 O
+
 public index.html에 주석아래에 src의 파일들을 하나로 번들링해서 만들어주는 것이다.
 
 npm i axios
