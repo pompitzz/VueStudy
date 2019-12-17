@@ -16,29 +16,30 @@
     import TodoList from "./components/TodoList";
     import TodoInput from "./components/TodoInput";
     import TodoFooter from "./components/TodoFooter";
+
     export default {
-        data: function () {
+        data() {
             return {
                 todoItems: [],
             }
         },
         methods: {
-            addOneItem: function (newTodoItem) {
-                var obj = {completed: false, item: newTodoItem};
+            addOneItem(newTodoItem) {
+                const obj = {completed: false, item: newTodoItem};
                 localStorage.setItem(newTodoItem, JSON.stringify(obj));
                 this.todoItems.push(obj);
             },
-            removeOneItem: function (todoItem, index) {
+            removeOneItem(todoItem, index) {
                 localStorage.removeItem(todoItem.item);
                 this.todoItems.splice(index, 1);
             },
-            toggleOneItem: function (todoItem, index) {
+            toggleOneItem(todoItem, index) {
                 // todoItem.completed = !todoItem.completed; props로 내린 아이템을 다시 App으로 올리는 건 안좋음(안티 패턴)
                 this.todoItems[index].completed = !this.todoItems[index].completed;
                 localStorage.removeItem(todoItem.item);
                 localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
             },
-            clearAllItems: function () {
+            clearAllItems() {
                 localStorage.clear();
                 this.todoItems = [];
             }
@@ -48,9 +49,9 @@
            - 위 4개 사이사이에 비포 업데이트 등등이 있는데
               created는 생성되는 시점에 동작하는 life-cycle
          */
-        created: function () {
+        created() {
             if (localStorage.length > 0) {
-                for (var i = 0; i < localStorage.length; i++) {
+                for (let i = 0; i < localStorage.length; i++) {
                     if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
                         // JSON.parse 해줘야 type이 String이 아닌 원래 타입으로 돌아간다.
                         this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));

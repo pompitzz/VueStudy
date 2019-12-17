@@ -1,0 +1,156 @@
+ES6를 사용하여 기존에 작성한 코드를 리팩토링하기
+
+ES6 란?
+ - ECMAScript 2015동일한 용어
+ - 최신 프론트 엔트 프레임워크인 리액트, 앵귤러, 뷰에서 권고하는 언어 형식
+
+Bable
+ - 구 버전 브라우저 중에서는 ES6의 기능을 지원하지 않는 브라우저가 있으므로 transpiling이 필요하다.
+ - Bable이 ES6의 문법을 각 브라우저의 호환 가능한 ES5로 변환하는 컴파일러다이다.
+
+E6특징(const & let - 새로운 변수 선언 방식)
+ - 블록단위 { }로 변수의 범위가 제한되었음 (원래 for문의 변수들이 공유되었다?)
+ - const: 한번 선언한 값에 대해서 변경할 수 없음(상수 개념) [ java final 같은거 인듯 ]
+ - let: 한번 선언한 값에 대해서 다시 선언할 수 없음. [ 흔히 java 변수들 재 선언 불가 ]
+
+ES5 특징
+ Hoisting
+  - 선언한 함수와 변수를 해석기가 가장 상단에 있는 것처럼 인식한다.
+  - js 해석기는 코드의 라운 순서와 관계없이 함수 선언식과 변수를 위한 메모리 공간을 먼저 확보한다.
+  - 따라서 function a()와 var는 코드 최상단으로 끌어 올려진 것 처럼 보인다.
+
+    함수 선언 식
+    fuction sum() {
+        return 10 + 20;
+    }
+
+    함수 표현 식
+    var sum = function() {
+        return 10 + 20;
+    }
+
+    fuction a () {
+        return 10;
+    }
+    a(); -> 5를 리턴한다. 왜냐하면 함수 선언 식과 변수를 메모리에 먼저 올리기 때문이다.
+    functio a () {
+        return 5;
+    }
+
+    var sum = 5;
+    sum = sum + i;
+    var i = 10;
+    -----> 이렇게 해도 동작한다 왜냐하면
+    var sum;
+    var i;
+    sum = 5;
+    sum = sum + i;
+    i = 10;
+    -----> 이런식으로 정의되기 때문에 변수에 선언되기는 했기때문에 값은 이상하더라도 에러는 안남
+
+ES6 특징
+  - let
+    let sum 0;
+    for (let i = 1; i <= 5; i++){
+         sum = sum + i;
+    }
+    console.log(sum); 10;
+    console.log(i); Uncaught ReferenceError
+    -----> 이렇게 for문의 i를 let으로 선언하면 블록 안에만 변수가 적용된다.
+
+  - const
+    const a = 10;
+     a = 20; 에러 발생!
+
+     하지만 객체나 배열의 내부는 변경 가능
+     const a  = {};
+     a.num = 10;
+     a; -----> {num: 10};
+
+     const b = [];
+     b.push(10);
+     b; -----> [10]
+
+     const, let 정리
+     function f() {
+        {
+            let x;
+            {  // 새로운 블록은 새로운 x 스코프가 생긴다.
+                const x = 'a';
+                x = 'foo'; // const = x 이므로 에러
+            }
+            x = 'bar';
+            let x = 'b' / let 이므로 에러
+        }
+    }
+
+Arrow Function - 화살표 함수 ( 자바 람다 인듯 )
+ - 함수를 정의할 때 function 이라는 키워드를 사용하지 않고 => 로 대체
+ - 흔히 사용하는 콜백 함수의 문법을 간결화
+
+    // ES5 함수 정의 방식
+    var sum = function(a, b) {
+        return a + b;
+    }
+    // ES6 함수 정의 방식
+    var sum = (a, b) => {
+        return a + b;
+    }
+
+    // ES5
+    var arr = ['a', 'b', 'c'];
+    arr.forEach(function(value) {
+        console.log(value);
+    });
+
+    // ES6: 웹페이지의 바이트 수가 줄어드니 성능상의 이윤도 조금은 있다..
+    var arr = ['a', 'b', 'c'];
+    arr.forEach(value => console.log(value));
+
+Enhanced Object Literals - 향상된 객체 리터럴
+ - 객체의 속성을 메서드로 사용할 때 function 예약어를 생략하고 생성 가능
+
+ var dictionary = {
+    lookup: function() {
+        console.log('found sth');
+    }
+ }
+
+ dictionary.lookup(); ---> lookup 함수 호출
+
+ // 향상된 객체 리터럴 사용!
+ var dictionary = {
+    lookup() {  // function 쓸 필요 없다.
+        console.log('found sth');
+    }
+ }
+ dictionoary.lookup(); --->  lookup 함수 호출
+
+
+ - 객체의 속성명과 값명이 동일할 때 아래와 같이 축약 가능
+ var figures = 10;
+ var dictionary = {
+    // fugures: figures,
+    figures
+ };
+
+Modules - 자바스크립트 모듈화 방법
+ - 자바스크립트 모듈 로더 라이브러리(AMD, Commons JS) 기능을 js 언어 자체에서 지원
+ - 호출되기 전까지는 코드 실행과 동작을 하지 않는 특징이 있음
+  export function sum(x, y){
+    return x + y;
+  }
+  export var pi = 3.141593;
+
+  import {sum} from 'libs/math.js';
+  sum(1, 2);
+ - 변수의 스코프 충돌, 변수 유호범위 차원에서 안정성 있는 코딩을 위해 모듈화를 지원한다.
+
+ export default function(x) {
+    return console.log(x);
+  }
+
+  import util from 'util.js';
+  import log from 'util.js';
+  // 이렇게 이름 바꿔서 import 가능하다.
+

@@ -28,14 +28,14 @@
     import Modal from "./common/Modal";
 
     export default {
-        data: function () {
+        data() {
             return {
                 newTodoItem: '',
                 showModal: false,
             }
         },
         methods: {
-            addTodo: function () {
+            addTodo() {
                 if (this.newTodoItem !== '') {
                     this.$emit('addTodoItem', this.newTodoItem);
                     // localStorage.setItem(this.newTodoItem, obj); 이렇게 넣으면 OBJECT로 Value가 들어간다.
@@ -44,7 +44,7 @@
                     this.showModal = true;
                 }
             },
-            clearInput: function () {
+            clearInput() {
                 this.newTodoItem = '';
             }
         },
