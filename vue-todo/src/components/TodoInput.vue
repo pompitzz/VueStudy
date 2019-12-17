@@ -37,8 +37,8 @@
         methods: {
             addTodo() {
                 if (this.newTodoItem !== '') {
-                    this.$emit('addTodoItem', this.newTodoItem);
-                    // localStorage.setItem(this.newTodoItem, obj); 이렇게 넣으면 OBJECT로 Value가 들어간다.
+                    const text = this.newTodoItem.trim();
+                    this.$store.commit('addOneItem', text);
                     this.clearInput();
                 } else {
                     this.showModal = true;

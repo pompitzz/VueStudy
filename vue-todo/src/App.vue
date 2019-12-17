@@ -1,13 +1,9 @@
 <template>
     <div id="app">
         <TodoHeader/>
-        <TodoInput v-on:addTodoItem="addOneItem"/>
-        <TodoList
-                v-bind:propsdata="todoItems"
-                v-on:removeItem="removeOneItem"
-                v-on:toggleItem="toggleOneItem"
-        />
-        <TodoFooter v-on:clearAll="clearAllItems"/>
+        <TodoInput/>
+        <TodoList/>
+        <TodoFooter/>
     </div>
 </template>
 
@@ -18,12 +14,8 @@
     import TodoFooter from "./components/TodoFooter";
 
     export default {
-        data() {
-            return {
-                todoItems: [],
-            }
-        },
-        methods: {
+        /*
+        methods: { // mutations
             addOneItem(newTodoItem) {
                 const obj = {completed: false, item: newTodoItem};
                 localStorage.setItem(newTodoItem, JSON.stringify(obj));
@@ -43,24 +35,12 @@
                 localStorage.clear();
                 this.todoItems = [];
             }
-        },
+        },*/
         /* 뷰 라이플 사이클
            인스턴스 생성 ---> 마운티드 ---> 업데이티드 ---> 디스트로이티드
            - 위 4개 사이사이에 비포 업데이트 등등이 있는데
               created는 생성되는 시점에 동작하는 life-cycle
          */
-        created() {
-            if (localStorage.length > 0) {
-                for (let i = 0; i < localStorage.length; i++) {
-                    if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
-                        // JSON.parse 해줘야 type이 String이 아닌 원래 타입으로 돌아간다.
-                        this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
-
-                        // this.todoItems.push(localStorage.key(i));
-                    }
-                }
-            }
-        },
         components: {
             TodoHeader,
             TodoList,
