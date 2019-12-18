@@ -1,4 +1,4 @@
-import {fetchAskList, fetchJobsList, fetchNewsList, fethchUserInfo, fetchItemInfo, fetchList} from "../api/api";
+import {fetchItemInfo, fetchList, fethchUserInfo} from "../api/api";
 
 export default {
     /* this의 4가지 방식, 화살표 함수의 this
@@ -44,12 +44,22 @@ export default {
             .then(({data}) => commit('SET_ITEM', data))
             .catch(error => console.log(error));
     },
-    FETCH_LIST({commit}, pageName) {
-        return fetchList(pageName)
-            .then(({data}) => {
-                commit('SET_LIST', data)
-            })
-            .catch(error => console.log(error));
-    }
+    // FETCH_LIST({commit}, pageName) {
+    //     return fetchList(pageName)
+    //         .then(({data}) => {
+    //             commit('SET_LIST', data)
+    //         })
+    //         .catch(error => console.log(error));
+    // },
 
+    // async
+    async FETCH_LIST({commit}, pageName) {
+        try {
+            const response = await fetchList(pageName);
+            commit('SET_LIST', response.data);
+            return response;
+        } catch (e) {
+            console.log(e);
+        }
+    },
 }

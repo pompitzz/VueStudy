@@ -6,18 +6,6 @@ const config = {
 };
 
 // 2. API 함수들을 정리
-function fetchNewsList() {
-    return axios.get(`${config.baseUrl}news/1.json`); // `` 이용하면 이렇게 연결 가능
-}
-
-function fetchJobsList() {
-    return axios.get(`${config.baseUrl}jobs/1.json`);
-}
-
-function fetchAskList() {
-    return axios.get(`${config.baseUrl}ask/1.json`);
-}
-
 function fethchUserInfo(username) {
     return axios.get(`${config.baseUrl}user/${username}.json`);
 }
@@ -30,10 +18,16 @@ function fetchList(pageName) {
     return axios.get(`${config.baseUrl}${pageName}/1.json`);
 }
 
+// async function fetchList(pageName) { 이렇게 api에서 async 붙이고 try catch 가능하다.
+//     try {
+//         return axios.get(`${config.baseUrl}${pageName}/1.json`);
+//     } catch (e) {
+//         console.log(e);
+//     }
+// }
+
+
 export {
-    fetchNewsList,
-    fetchJobsList,
-    fetchAskList,
     fethchUserInfo,
     fetchItemInfo,
     fetchList
