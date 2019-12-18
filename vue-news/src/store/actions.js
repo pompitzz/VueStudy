@@ -1,7 +1,6 @@
 import {fetchAskList, fetchJobsList, fetchNewsList, fethchUserInfo, fetchItemInfo, fetchList} from "../api/api";
 
 export default {
-
     /* this의 4가지 방식, 화살표 함수의 this
     this // window 객체가 찍힘
     function sum(a,b){
@@ -46,8 +45,10 @@ export default {
             .catch(error => console.log(error));
     },
     FETCH_LIST({commit}, pageName) {
-        fetchList(pageName)
-            .then(({data}) => commit('SET_LIST', data))
+        return fetchList(pageName)
+            .then(({data}) => {
+                commit('SET_LIST', data)
+            })
             .catch(error => console.log(error));
     }
 

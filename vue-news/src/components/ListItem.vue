@@ -44,7 +44,6 @@
         name: "ListItem",
         computed: {
             listItems() {
-                ``
                 return this.$store.state.list;
             }
         },
