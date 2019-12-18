@@ -1,6 +1,6 @@
 export default {
-    getJobList(state) {
-        return state.jobList;
+    getJobsList(state) {
+        return state.jobsList;
     },
     getNewsList(state) {
         return state.newsList;
