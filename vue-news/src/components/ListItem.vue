@@ -42,29 +42,12 @@
 
     export default {
 
-        name: "NewsView",
+        name: "ListItem",
         computed: {
             listItems() {
-                const name = this.$route.name;
-                if (name === 'news') {
-                    return this.$store.state.newsList;
-                } else if (name === 'ask') {
-                    return this.$store.state.askList;
-                } else if (name === 'jobs') {
-                    return this.$store.state.jobsList;
-                }
+                return this.$store.state.list;
             }
         },
-        created() {
-            // const name = this.$route.name;
-            // if (name === 'news') {
-            //     this.$store.dispatch('FETCH_NEWS');
-            // } else if (name === 'ask') {
-            //     this.$store.dispatch('FETCH_ASK');
-            // } else if (name === 'jobs') {
-            //     this.$store.dispatch('FETCH_JOBS');
-            // }
-        }
         /*
             beforeMount, created 에서 주로 값을 받아옴
             mounted로 하면 뷰의 리액티브티 시스템때문에 화면이 다시 그려진다.
