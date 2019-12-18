@@ -56,14 +56,14 @@
             }
         },
         created() {
-            const name = this.$route.name;
-            if (name === 'news') {
-                this.$store.dispatch('FETCH_NEWS');
-            } else if (name === 'ask') {
-                this.$store.dispatch('FETCH_ASK');
-            } else if (name === 'jobs') {
-                this.$store.dispatch('FETCH_JOBS');
-            }
+            // const name = this.$route.name;
+            // if (name === 'news') {
+            //     this.$store.dispatch('FETCH_NEWS');
+            // } else if (name === 'ask') {
+            //     this.$store.dispatch('FETCH_ASK');
+            // } else if (name === 'jobs') {
+            //     this.$store.dispatch('FETCH_JOBS');
+            // }
         }
         /*
             beforeMount, created 에서 주로 값을 받아옴

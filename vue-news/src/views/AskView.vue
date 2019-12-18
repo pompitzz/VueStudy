@@ -6,54 +6,31 @@
 
 <script>
     import ListItem from "../components/ListItem";
-    // import {mapGetters} from "vuex";
+    import bus from "../utils/bus";
 
     export default {
         components: {
             ListItem,
-        }
+        },
         // name: "AskView",
         // computed: {
         //     ...mapGetters(['getAskList']),
         // },
-        // created() {
-        //     this.$store.dispatch('FETCH_ASK')
-        // }
+        created() {
+            bus.$emit('start:spinner');
+            setTimeout(() => {
+                this.$store.dispatch('FETCH_ASK')
+                    .then(() => {
+                        console.log('fetched');
+                        bus.$emit('end:spinner');
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }, 3000);
+        }
     }
 </script>
 
 <style scoped>
-    /*.ask-list {*/
-    /*    margin: 0;*/
-    /*    padding: 0;*/
-    /*}*/
-
-    /*.post {*/
-    /*    list-style: none;*/
-    /*    display: flex;*/
-    /*    align-items: center;*/
-    /*    border-bottom: 1px solid white;*/
-    /*    padding: 5px;*/
-    /*}*/
-
-    /*.points {*/
-    /*    width: 80px;*/
-    /*    height: 60px;*/
-    /*    display: flex;*/
-    /*    align-items: center;*/
-    /*    justify-content: center;*/
-    /*    color: #42b883;*/
-    /*}*/
-
-    /*.ask-title {*/
-    /*    margin: 0;*/
-    /*}*/
-
-    /*.ask-info {*/
-    /*    color: #828282;*/
-    /*}*/
-
-    /*.ask-user {*/
-    /*    color: #0fa009;*/
-    /*}*/
 </style>

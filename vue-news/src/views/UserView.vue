@@ -4,7 +4,7 @@
             <div slot="username">{{userInfo.id}}</div>
             <!-- template는 태그없이 내용만 들어간다-->
             <span slot="time">{{ 'Joined: ' + userInfo.created}}, </span>
-            <span slot="karma">{{userInfo.karma}}</span>
+            <span slot="karma">{{'Point: ' + userInfo.karma}}</span>
         </user-profile>
     </div>
 </template>

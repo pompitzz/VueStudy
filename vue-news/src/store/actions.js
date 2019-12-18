@@ -1,8 +1,7 @@
 import {fetchAskList, fetchJobsList, fetchNewsList, fethchUserInfo, fetchItemInfo} from "../api/api";
 
 export default {
-    FETCH_NEWS(context) {
-        // mutations에 접근할 수 있게 context가 항상 존재
+    FETCH_NEWS(context) {        // mutations에 접근할 수 있게 context가 항상 존재
         /* this의 4가지 방식, 화살표 함수의 this
         this // window 객체가 찍힘
         function sum(a,b){
@@ -26,7 +25,10 @@ export default {
         */
         fetchNewsList()
             //vuex 구조상 actions에서 바로 state로 담을 수 없다.
-            .then(response => context.commit('SET_NEWS', response.data))
+            .then(response => {
+                context.commit('SET_NEWS', response.data);
+                return response;
+            })
             .catch(error => console.log(error));
     },
     FETCH_JOBS({commit}) { // Object Destructuring
