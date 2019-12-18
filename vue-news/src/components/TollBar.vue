@@ -1,10 +1,8 @@
 <template>
     <div class="header">
-        <router-link to="/news">News</router-link>
-        |
-        <router-link to="/ask">Ask</router-link>
-        |
-        <router-link to="/jobs">Jobs</router-link>
+        <router-link class="menu" to="/news">News</router-link>
+        <router-link class="menu" to="/ask">Ask</router-link>
+        <router-link class="menu" to="/jobs">Jobs</router-link>
     </div>
 </template>
 
@@ -23,11 +21,16 @@
     }
 
     .header .router-link-exact-active {
-        color: blue;
+        color: black;
+        text-decoration: underline;
     }
 
     .header a {
         color: white;
         text-decoration: none;
+    }
+
+    .menu {
+        margin-left: 10px;
     }
 </style>
