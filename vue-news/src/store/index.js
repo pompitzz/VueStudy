@@ -13,11 +13,9 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        newsList: [],
-        askList: [],
-        jobsList: [],
         user: {},
         item: {},
+        list: [],
     },
     getters,
     mutations,
