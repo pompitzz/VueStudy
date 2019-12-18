@@ -7,5 +7,11 @@ export default {
     },
     SET_ASK(state, askList) {
         state.askList = askList;
+    },
+    SET_USER(state, user) {
+        state.user = user;
+    },
+    SET_ITEM(state, item) {
+        state.item = item;
     }
 }

@@ -29,11 +29,12 @@ const router = new VueRouter({
             component: JobsView,
         },
         {
-            path: '/user',
+            //:id로 넘기기 때문에 개발자도구를 보면 id:james 이런식으로 돼있다.
+            path: '/user/:id',
             component: UserView,
         },
         {
-            path: '/item',
+            path: '/item/:id',
             component: ItemView,
         }
     ]

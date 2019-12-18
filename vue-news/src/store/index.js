@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from "vuex";
-import {fetchAskList, fetchJobsList, fetchNewsList} from "../api";
+import {fetchAskList, fetchJobsList, fetchNewsList} from "../api/api";
 import mutations from "./mutations";
 import actions from "./actions";
 import getters from "./getters";
@@ -15,7 +15,9 @@ const store = new Vuex.Store({
     state: {
         newsList: [],
         askList: [],
-        jobList: []
+        jobList: [],
+        user: {},
+        item: {},
     },
     getters,
     mutations,

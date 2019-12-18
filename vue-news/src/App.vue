@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <toll-bar/>
-    <router-view/>
+    <transition name="page">
+      <router-view/>
+    </transition>
   </div>
 </template>
 
@@ -20,4 +22,14 @@
     padding: 0;
     margin: 0;
   }
+
+  /* Router Transition */
+  .page-enter-active, .page-leave-active {
+    transition: opacity .5s;
+  }
+
+  .page-enter, .page-leave-to {
+    opacity: 0;
+  }
+
 </style>

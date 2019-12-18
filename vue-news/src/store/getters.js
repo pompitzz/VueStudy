@@ -7,5 +7,11 @@ export default {
     },
     getAskList(state) {
         return state.askList;
+    },
+    getUser(state) {
+        return state.user;
+    },
+    getItem(state) {
+        return state.item;
     }
 }
