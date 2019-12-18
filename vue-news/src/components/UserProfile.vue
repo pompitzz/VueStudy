@@ -5,28 +5,26 @@
                 <i class="fas fa-user"/>
             </div>
             <div class="user-description">
-                <div>
-                    {{getUser.id}}
+                <!-- 상위 컴포넌트에서 정의할 영역 -->
+                <slot name="username"/>
+                <div class="time">
+                    <slot name="time"/>
+                    <span class="karma">
+                         <slot name="karma"/>
+                    </span>
                 </div>
-                <small class="created">
-                    {{getUser.created}}
-                </small>
+
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import {mapGetters} from "vuex";
 
     export default {
         name: "UserProfile",
-        computed: {
-            ...mapGetters(['getUser'])
-        },
-        created() {
-            const username = this.$route.params.id;
-            this.$store.dispatch('FETCH_USER', username);
+        props: {
+            info: Object,
         }
     }
 </script>
@@ -46,9 +44,13 @@
         padding-left: 8px;
     }
 
-    .created {
+    .time {
         font-size: 0.8rem;
         color: #828282;
+    }
+
+    .karma {
+        color: black;
     }
 
 </style>
