@@ -46,7 +46,7 @@ new Vue({
 #### 컴포넌트 통신 규칙이 필요한 이유
  - 규칙이 있으면 데이터를 추적하기 쉬워지기 때문에 개발의 효율성이 좋아진다.
 #### props 전달하기
-  - 상위 컴포넌트의 message를 v-bind:propsdata="message"로 데이터를 하위 컴포넌트에게 내려주면 하위컴포넌트는 props: ['propsdata']로 내려 받을 수 있음.
+  - 상위 컴포넌트의 message를 v-bind:propsdata ="message"로 데이터를 하위 컴포넌트에게 내려주면 하위컴포넌트는 props: ['propsdata']로 내려 받을 수 있음.
 ```js
 // 상위 컴포넌트
 new Vue({
@@ -498,3 +498,145 @@ methods:{
 }
 ```
 ---
+### this의 4가지 방식과 화살표 함수의 this
+```js
+// window 객체가 찍힘
+function sum(a,b){
+  console.log(this)
+}
+
+// 생성된 Vue를 가르킨다.
+function Vue(el){
+  console.log(this);
+  this.el = el;
+}
+// 비동기 호출 시
+console.log('호출 전: ', this); // VueComponent가 찍힌다.
+fetchJobsList()
+.then(function (response) {
+  console.log('호출 후: ', this); // undefined찍힌다. 비동기 호출은 이렇게 된다.
+})
+.catch(function (error) {
+  console.log(error)
+});
+//  화살표 함수는 호출 후 this도 VueComponent가 찍힘.
+```           
+### 비동기 처리
+- 데이터 요청이 가고 응답이 오기 전에 다른게 먼저 실행 될 수 있음
+- 그것을 제어하기 위해 보통 콜백함수 사용
+- 비동기 처리를 위해 계속 콜백 함수를 연달아 만들면 콜백 지옥...
+- 이것의 방안으로 Promise가 생김 -> 직관적인 코드를 짜게 해줌
+- 최근엔 Promise보다 더 좋은 async & await이 있다.
+```js
+$.ajax({
+    url: 'https://api.hnpwa.com/v0/news/1.json',
+    success: function (data) {
+        console.log('데이터 호출 결과', data);
+        result = data;
+    }
+});
+```
+### 두가지의 데이터 처리 흐름 비교하기
+ 1. **Profile에서 computed로 store의 데이터들을 받아오기**
+```js
+// UserView
+import UserProfile from "../components/UserProfile";
+export default {
+    name: "NewsView",
+    components: {
+        UserProfile,
+    }
+  }
+
+// Profile
+import {mapGetters} from 'vuex'
+export default {
+    name: "UserProfile",
+    computed:{
+        ...mapGetters(['getUser'])
+    },
+    created() {
+        const username = this.$route.params.id;
+        this.$store.dispatch('FETCH_USER',username);
+    }
+}
+```
+
+ 2. **props로 Profile에 데이터 내려주기**
+    - 데이터 전송흐름이 하나 더 생기나, 데이터가 보내지는것을 명시적으로 알 수 있다.
+    - Profile을 여러군데에서 참조할 경우는 props로 값을 내려주는게 더 좋음.
+```js
+// UserView에서 props로 내려준다.
+<UserProfile :getUser="userInfo"/> // html
+
+import UserProfile from "../components/UserProfile";
+export default {
+    name: "NewsView",
+    components: {
+        UserProfile,
+    },
+    computed: {
+        userInfo() {
+            return this.$store.user;
+        }
+    },
+    created() {
+        const username = this.$route.params.id;
+        this.$store.dispatch('FETCH_USER', username)
+    }
+}
+
+// Profile
+export default {
+    name: "UserProfile",
+    props:{
+        getUser: Object, // Object라고 명시하면 Object만 받는다.
+    }
+}
+```
+---
+## 하이 오더 컴포넌트와 Mixin
+#### 하이 오더 컴포넌트
+ - 뷰의 하이 오더 컴포넌트는 리액트의 하이 오더 컴포넌트에서 기원된 것
+ - 하이 오더 컴포넌트는 컴포넌트 로직을 재사용하기 위한 고급 기술이다.
+ - createListView의 파라미터인 name에 따라 다른 actions가 수행되고 그 후  ListView로 render하고 ListView에선 ListItem을 통해 화면을 보여주게 된다.
+ - 혹은 그냥 바로 ListItem으로  render하여도 된다.
+```js
+export default function createdListView(name) {
+    return {
+        name: name,
+        created(){
+            bus.$emit('start:spinner');
+            this.$store.dispatch('FETCH_LIST', this.$route.name)
+                .then(() => {
+                    console.log('fetched');
+                    bus.$emit('end:spinner');
+                })
+                .catch(err => console.log(err));
+        },
+        render(createElement){
+            return createElement(ListView);
+            //return createElement(ListItem);
+        }
+    }
+}
+
+// ListView
+import ListItem from "../components/ListItem";
+export default {
+    name: "ListView",
+    components:{
+        ListItem
+    }
+}
+
+// ListItem
+export default {
+    name: "ListItem",
+    computed: {
+        listItems() {
+            return this.$store.state.list;
+        }
+    },
+}
+```
